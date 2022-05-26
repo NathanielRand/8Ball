@@ -88,7 +88,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		// // Notes
 		note1 := "This bot will provides a carefully determined answer to your desired question 🎱\n \n"
-		note2 := "❕ Commands are case-sensitive. Lower-case only :) \n \n"
+		// note2 := "❕ Commands are case-sensitive. Lower-case only :) \n \n"
 		note3 := "\n👨🏼‍💻 Dev: Narsiq#5638. DM me for requests/questions/sups\n \n"
 
 		commandPrefix := prefix
@@ -103,7 +103,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		commandStats := "📊  " + commandPrefix + "stats - Check out 8Ball stats. \n\n"
 		commandVersion := "🤖  " + commandPrefix + "version - Current 8Ball version. \n\n"
 
-		messageFull := greeting + introduction + note1 + note2 + commandsHeader + commandAnswer + commandHelpMessage + commandInvite + commandSite + commandSupport + commandStats + commandVersion + note3
+		messageFull := greeting + introduction + note1 + commandsHeader + commandAnswer + commandHelpMessage + commandInvite + commandSite + commandSupport + commandStats + commandVersion + note3
 
 		message := "```\n" + messageFull + "\n```"
 
