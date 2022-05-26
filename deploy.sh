@@ -7,14 +7,14 @@ export PATH=$PATH:/usr/local/go/bin
 export GO111MODULE=off
 
 # Pull most recent updates from Github repo.
-git pull https://github.com/NathanielRand/FortuneCookie
+git pull https://github.com/NathanielRand/8Ball
 
 # Build go program.
 go build
 
 # Kill previously running background process.
-kill $(pgrep FortuneCookie)
+kill $(pgrep 8Ball)
 
 # Run and detach updated go program into a new process.
-nohup ./FortuneCookie &
+nohup ./8Ball &
 

@@ -7,7 +7,6 @@ import (
 	"math/rand"
 	"os"
 	"os/signal"
-	"reflect"
 	"strconv"
 	"strings"
 	"syscall"
@@ -17,7 +16,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-const prefix string = "?fc"
+const prefix string = "!8b"
 const version string = "1.1.0"
 
 func goDotEnvVariable(key string) string {
@@ -29,17 +28,6 @@ func goDotEnvVariable(key string) string {
 
 	// Return value from key provided.
 	return os.Getenv(key)
-}
-
-func test(t interface{}) {
-	switch reflect.TypeOf(t).Kind() {
-	case reflect.Slice:
-		s := reflect.ValueOf(t)
-
-		for i := 0; i < s.Len(); i++ {
-			fmt.Println(s.Index(i))
-		}
-	}
 }
 
 func main() {
@@ -96,10 +84,10 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		// commandHelpTitle := "Looks like you need a hand. Check out my goodies below... \n \n"
 		greeting := "Hi " + author + "! \n \n"
-		introduction := "FortuneCookie bot is here to help.\n"
+		introduction := "8Ball bot is here to help.\n"
 
 		// // Notes
-		note1 := "This bot will return a fortune based on unfathomable cosmic events ✨ \n \n"
+		note1 := "This bot will provides a carefully determined answer to your desired question 🎱\n \n"
 		note2 := "❕ Commands are case-sensitive. Lower-case only :) \n \n"
 		note3 := "\n👨🏼‍💻 Dev: Narsiq#5638. DM me for requests/questions/sups\n \n"
 
@@ -107,20 +95,15 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 		// // Commands
 		commandsHeader := "\nCOMMANDS:\n\n"
-		commandHelpMessage := "❔  " + commandPrefix + "help \n- Provides a list of my commands. \n\n"
-		commandFortune := "✨  " + commandPrefix + " \n- Returns a fortune based on unfathomable cosmic events. \n\n"
-		commandInvite := "🔗  " + commandPrefix + "invite \n- A invite link for the FortuneCookie Bot. \n\n"
-		commandSite := "🔗  " + commandPrefix + "site \n- Link to the FortuneCookie website. \n\n"
-		commandSupport := "💝  " + commandPrefix + "support \n- Link to the FortuneCookie Patreon. \n\n"
-		commandStats := "📊  " + commandPrefix + "stats \n- Check out FortuneCookie stats. \n\n"
-		commandVersion := "🤖  " + commandPrefix + "version \n- Current FortuneCookie version. \n\n"
+		commandHelpMessage := "❔  " + commandPrefix + "help - Provides a list of my commands. \n\n"
+		commandAnswer := "🎱  " + commandPrefix + " - Returns a carefully determined answer to your desired question.\n\n"
+		commandInvite := "🔗  " + commandPrefix + "invite - A invite link for the 8Ball Bot. \n\n"
+		commandSite := "🔗  " + commandPrefix + "site - Link to the 8Ball website. \n\n"
+		commandSupport := "💝  " + commandPrefix + "support - Link to the 8Ball Patreon. \n\n"
+		commandStats := "📊  " + commandPrefix + "stats - Check out 8Ball stats. \n\n"
+		commandVersion := "🤖  " + commandPrefix + "version - Current 8Ball version. \n\n"
 
-		// // Build start vote message
-		// messageGreet := greeting + " " + author + "... \n"
-		// messageFortune := "```fix" + "\n" + "🥠 " + fortune + "\n" + "```"
-		// messageTitle := "🍀 " + author + "'s Lucky Numbers: "
-
-		messageFull := greeting + introduction + note1 + note2 + commandsHeader + commandFortune + commandHelpMessage + commandInvite + commandSite + commandSupport + commandStats + commandVersion + note3
+		messageFull := greeting + introduction + note1 + note2 + commandsHeader + commandAnswer + commandHelpMessage + commandInvite + commandSite + commandSupport + commandStats + commandVersion + note3
 
 		message := "```\n" + messageFull + "\n```"
 
@@ -130,42 +113,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 			fmt.Println(err)
 		}
 	}
-
-	// if strings.Contains(content, prefix+"help") {
-	// 	// Build help message
-	// 	author := m.Author.Username
-
-	// 	// Title
-	// 	commandHelpTitle := "Looks like you need a hand. Check out my goodies below... \n \n"
-
-	// 	// Notes
-	// 	note1 := "- Bot will return a fortune based on unfathomable cosmic events. \n"
-	// 	note2 := "- Commands are case-sensitive. They must be in lower-case :) \n"
-	// 	note3 := "- Dev: Narsiq#5638. DM me for requests/questions/love. \n"
-
-	// 	// Commands
-	// 	commandHelp := "❔  " + prefix + "help : Provides a list of my commands. \n"
-	// 	commandFortune := "🦶🏽  " + prefix + "?fc : Return a fortune based on unfathomable cosmic events. \n"
-	// 	commandInvite := "🔗  " + prefix + "invite : A invite link for the FortuneCookie Bot. \n"
-	// 	commandSite := "🔗  " + prefix + "site : Link to the FortuneCookie website. \n"
-	// 	commandSupport := "✨  " + prefix + "support : Link to the FortuneCookie Patreon. \n"
-	// 	commandStats := "📊  " + prefix + "stats : Check out FortuneCookie stats. \n"
-	// 	commandVersion := "🤖  " + prefix + "version : Current FortuneCookie version. \n"
-
-	// 	// Build sub messages
-	// 	notesMessage := note1 + note2 + note3
-	// 	commandsMessage := commandHelp + commandFortune
-	// 	othersMessage := commandInvite + commandSite + commandSupport + commandStats + commandVersion
-
-	// 	// Build full message
-	// 	message := "Whats up " + author + "\n \n" + commandHelpTitle + "NOTES: \n \n" + notesMessage + "\n" + "COMMANDS: \n \n" + commandsMessage + "\n" + "OTHER: \n \n" + othersMessage + "\n \n" + "https://www.patreon.com/BotVoteTo"
-
-	// 	// Reply to help request with build message above.
-	// 	_, err := s.ChannelMessageSendReply(m.ChannelID, message, m.Reference())
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// }
 
 	if strings.Contains(content, prefix+"site") {
 		// Build start vote message
@@ -193,7 +140,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if strings.Contains(content, prefix+"version") {
 		// Build start vote message
-		message := "FortuneCookie is currently running version " + version
+		message := "8Ball is currently running version " + version
 
 		// Send start vote message
 		_, err := s.ChannelMessageSendReply(m.ChannelID, message, m.Reference())
@@ -211,12 +158,11 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		guildCount := len(guilds)
 		guildCountStr := strconv.Itoa(guildCount)
 
-		test(guilds)
 		fmt.Println(guilds)
 		fmt.Printf("t1: %T\n", guilds)
 
 		// // Build start vote message
-		message := "FortuneCookie bot is currently on " + guildCountStr + " servers! Noice..."
+		message := "8Ball bot is currently on " + guildCountStr + " servers! Noice..."
 
 		// Send start vote message
 		_, err := s.ChannelMessageSendReply(m.ChannelID, message, m.Reference())
@@ -229,7 +175,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 		author := m.Author.Username
 
 		// // Build start vote message
-		message := "Wow! Such nice " + author + ". Thanks for spreading the 💖. Here is an invite link made just for you... \n \n" + "https://discord.com/api/oauth2/authorize?client_id=921252848036106270&permissions=274877995072&scope=bot"
+		message := "Wow! Such nice " + author + ". Thanks for spreading the 💖. Here is an invite link made just for you... \n \n" + "https://discord.com/api/oauth2/authorize?client_id=979170113842479205&permissions=100416&scope=bot"
 
 		// Send start vote message
 		_, err := s.ChannelMessageSendReply(m.ChannelID, message, m.Reference())
@@ -240,27 +186,15 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 
 	if strings.EqualFold(content, prefix) {
 		// Call greeting, fortune, and five numbers funcs to generate values.
-		greeting := getGreeting()
-		fortune := getFortune()
-		fiveNumbers := getFiveNumbers()
-
-		// Convert map values into string to be used in message below.
-		one := strconv.Itoa(fiveNumbers[1])
-		two := strconv.Itoa(fiveNumbers[2])
-		three := strconv.Itoa(fiveNumbers[3])
-		four := strconv.Itoa(fiveNumbers[4])
-		five := strconv.Itoa(fiveNumbers[5])
-		six := strconv.Itoa(getOneNumber())
+		answer := getAnswer()
 
 		// Grab author
 		author := m.Author.Username
 
 		// Build start vote message
-		messageGreet := greeting + " " + author + "... \n"
-		messageFortune := "```fix" + "\n" + "🥠 " + fortune + "\n" + "```"
-		messageTitle := "🍀 " + author + "'s Lucky Numbers: "
-		messageLucky := "```CSS" + "\n" + messageTitle + one + "-" + two + "-" + three + "-" + four + "-" + five + "-[" + six + "]" + "\n" + "```"
-		messageFull := messageGreet + messageFortune + messageLucky
+		messageGreet := author + "... \n"
+		messageAnswer := "```fix" + "\n" + "🎱 " + answer + "\n" + "```"
+		messageFull := messageGreet + messageAnswer
 
 		// Send start vote message
 		_, err := s.ChannelMessageSendReply(m.ChannelID, messageFull, m.Reference())
@@ -270,12 +204,8 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 }
 
-type Greeting struct {
-	Message string
-}
-
-func getGreeting() string {
-	csvFile, err := os.Open("greetings.csv")
+func getAnswer() string {
+	csvFile, err := os.Open("answers.csv")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -290,79 +220,9 @@ func getGreeting() string {
 	// Generate random number using min/max index of csv file lines.
 	rand.Seed(time.Now().UnixNano())
 	min := 0
-	max := 105
+	max := 20
 	randomIndex := rand.Intn(max-min+1) + min
 	result := csvLines[randomIndex]
 
 	return result[0]
-}
-
-type Fortune struct {
-	Message string
-}
-
-func getFortune() string {
-	csvFile, err := os.Open("fortunes.csv")
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer csvFile.Close()
-
-	// Read csv file
-	csvLines, err := csv.NewReader(csvFile).ReadAll()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// Generate random number using min/max index of csv file lines.
-	rand.Seed(time.Now().UnixNano())
-	min := 0
-	max := 842
-	randomIndex := rand.Intn(max-min+1) + min
-	result := csvLines[randomIndex]
-
-	return result[0]
-}
-
-func getFiveNumbers() map[int]int {
-	rand.Seed(time.Now().UnixNano())
-	min := 1
-	max := 70
-
-	m := make(map[int]int)
-	m[1] = rand.Intn(max-min) + min
-	m[2] = rand.Intn(max-min) + min
-	m[3] = rand.Intn(max-min) + min
-	m[4] = rand.Intn(max-min) + min
-	m[5] = rand.Intn(max-min) + min
-
-	for hasDupes(m) {
-		m[1] = rand.Intn(max-min) + min
-		m[2] = rand.Intn(max-min) + min
-		m[3] = rand.Intn(max-min) + min
-		m[4] = rand.Intn(max-min) + min
-		m[5] = rand.Intn(max-min) + min
-	}
-
-	return m
-}
-
-func getOneNumber() int {
-	rand.Seed(time.Now().UnixNano())
-	min := 1
-	max := 25
-	result := rand.Intn(max-min) + min
-
-	return result
-}
-
-func hasDupes(m map[int]int) bool {
-	x := make(map[int]struct{})
-	for _, v := range m {
-		if _, has := x[v]; has {
-			return true
-		}
-		x[v] = struct{}{}
-	}
-	return false
 }
