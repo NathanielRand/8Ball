@@ -185,7 +185,7 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 	}
 
 	if strings.EqualFold(content, prefix) {
-		// Call greeting, fortune, and five numbers funcs to generate values.
+		// Call answer func to generate values.
 		answer := getAnswer()
 
 		// Grab author
